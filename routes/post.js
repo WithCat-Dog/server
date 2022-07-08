@@ -58,32 +58,12 @@ const upload = multer({
     limits : { fileSize : 5*1024*1024},
 });
 
-/*
-router.post('/img', isLoggedIn, upload.single('img'), (req,res)=>{
-    try{
-        console.log(req.file);
-        res.json( {success : true, url : req.file.location });
-    }
-    catch(err){
-        console.log(err);
-    }
-})
-*/
 
 router.post('/img', upload.single('imgs'), (req,res)=>{
     console.log("들어옴");
     try{
         console.log(req.file);
-        //console.log(req.files, req.body);
-        //const urls = [];
-        //urls[0]=req.file.location;
         var url = req.file.location;
-        // for(i=0;i<5;i++){
-        //     if(req.files[i]!=null){
-        //         console.log(i+"번 있음");
-        //         urls[i]=req.files[i].location;
-        //     }
-        // }
         console.log("성공!!!!")
         return res.json({success : true, data : req.file.location, message : '성공'})
     }
@@ -118,19 +98,6 @@ router.post('/contents',uploadPost.none(),(req,res)=>{
                         return res.json({success : false, message : '게시글 업로드는 성공, 이미지 업로드 실패'});
                     }
                 })
-                // console.log('이미지 수 : '+urls.length);
-                // for(i=0;i<urls.length;i++){
-                //     console.log(i+"번째 이미지 "+urls[i]+" 업로드 시도");
-                //     connection.query(uploadImgs, [ result.insertId, urls[i] ],(err,result)=>{
-                //         try{
-                //             console.log("업로드 성공");
-                //         }
-                //         catch(err){
-                //             console.log('이미지 업로드 mysql 오류');
-                //             res.json({success : false, message : '게시글은 업로드 성공, 이미지 업로드 실패'});
-                //         }
-                //     })
-                // }
                 return res.json({success : true, message : pId+"님의 게시글과 이미지 업로드 성공"});
             }catch(err){
                 console.log("mysql 오류");
